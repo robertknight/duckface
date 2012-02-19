@@ -1,0 +1,71 @@
+#pragma once
+
+{{#includes}}
+#include <{{name}}>
+{{/includes}}
+
+{{#interfaces}}
+template <class T>
+class {{name}}Iface;
+class {{name}}IfaceBase;
+
+class {{name}}
+{
+public:
+	template <class T>
+	{{name}}(T* inst);
+
+	{{#methods}}
+	{{return-type}} {{name}}({{param-list}}){{qualifiers}};
+	{{/methods}}
+
+	{{name}}* operator->() {
+		return this;
+	}
+
+private:
+	{{name}}IfaceBase* m_impl;
+	void* m_obj;
+};
+{{/interfaces}}
+
+{{#interfaces}}
+class {{name}}IfaceBase
+{
+public:
+	{{#methods}}
+	virtual {{return-type}} {{name}}(void* inst{{#has-params}}, {{/has-params}}{{param-list}}) {{qualifiers}} = 0;
+	{{/methods}}
+};
+
+template <class T>
+class {{name}}Iface : public {{name}}IfaceBase
+{
+public:
+	{{#methods}}
+	virtual {{return-type}} {{name}}(void* inst{{#has-params}}, {{/has-params}}{{param-list}}) {{qualifiers}} {
+		return static_cast<T*>(inst)->{{name}}({{arg-list}});
+	};
+	{{/methods}}
+
+	static {{name}}Iface<T>* instance() {
+		static {{name}}Iface<T> inst;
+		return &inst;
+	}
+};
+
+template <class T>
+inline {{name}}::{{name}}(T* inst)
+: m_impl({{name}}Iface<T>::instance())
+, m_obj(inst)
+{
+}
+
+{{#methods}}
+inline {{return-type}} {{iface-name}}::{{name}}({{param-list}}) {{qualifiers}}
+{
+	return m_impl->{{name}}(m_obj{{#has-params}}, {{/has-params}}{{arg-list}});
+}
+{{/methods}}
+{{/interfaces}}
+

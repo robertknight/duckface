@@ -40,7 +40,7 @@ grammar Duckface
 	rule param_list
 		param_decl s "," param_list <ParamListNode>
 		/
-		param_decl <ParamListNode>
+		param_decl
 	end
 
 	rule qualifier_list

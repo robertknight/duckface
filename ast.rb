@@ -59,13 +59,15 @@ class MethodDeclNode < Treetop::Runtime::SyntaxNode
 		elements.each do |e|
 			if e.is_a?(ParamListNode)
 				return e.params
+			elsif e.is_a?(ParamDeclNode)
+				return [e]
 			end
 		end
 		return []
 	end
 end
 
-module ParamListNode
+class ParamListNode < Treetop::Runtime::SyntaxNode
 	def params
 		elements.flat_map do |e|
 			if e.is_a?(ParamDeclNode)

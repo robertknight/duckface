@@ -605,7 +605,6 @@ module Duckface
       r0 = r1
     else
       r6 = _nt_param_decl
-      r6.extend(ParamListNode)
       if r6
         r0 = r6
       else
