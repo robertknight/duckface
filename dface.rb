@@ -52,8 +52,6 @@ result.interfaces.each do |iface|
 		param_list = ""
 		arg_list = ""
 
-		puts "method #{method.name} has #{method.params.length} params"
-
 		method.params.each_with_index do |e,i|
 			if !param_list.empty?
 				param_list += ", "
