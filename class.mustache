@@ -54,7 +54,7 @@ class {{name}}Iface : public {{name}}IfaceBase
 public:
 	{{#methods}}
 	virtual {{return-type}} {{name}}(void* inst{{#has-params}}, {{/has-params}}{{param-list}}) {{qualifiers}} {
-		return static_cast<T*>(inst)->{{name}}({{arg-list}});
+		{{#has-return-value}}return {{/has-return-value}}static_cast<T*>(inst)->{{name}}({{arg-list}});
 	};
 	{{/methods}}
 
@@ -74,7 +74,7 @@ inline {{name}}::{{name}}(T* inst)
 {{#methods}}
 inline {{return-type}} {{iface-name}}::{{name}}({{param-list}}) {{qualifiers}}
 {
-	return m_impl->{{name}}(m_obj{{#has-params}}, {{/has-params}}{{arg-list}});
+	{{#has-return-value}}return {{/has-return-value}}m_impl->{{name}}(m_obj{{#has-params}}, {{/has-params}}{{arg-list}});
 }
 {{/methods}}
 {{/interfaces}}
