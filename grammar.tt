@@ -1,0 +1,78 @@
+require 'ast.rb'
+
+grammar Duckface
+	rule block_list
+		block* <BlockListNode>
+	end
+
+	rule block
+		include_block s <IncludeBlockNode>
+		/
+		iface_block s <InterfaceBlockNode>
+	end
+
+	rule include_block
+		s "#include" s include_name
+	end
+
+	rule include_name
+		"<" file_name ">"
+		/
+		'"' file_name '"'
+	end
+
+	rule file_name
+		[a-zA-Z_0-9/ \.]+
+	end
+
+	rule iface_block
+		s "interface" ident_name s "{" method_list s "}"
+	end
+
+	rule method_list
+		method_decl* <MethodListNode>
+	end
+
+	rule method_decl
+		type_name ident_name s "(" param_list? s ")" qualifier_list s ";" <MethodDeclNode>
+	end
+
+	rule param_list
+		param_decl s "," param_list <ParamListNode>
+		/
+		param_decl <ParamListNode>
+	end
+
+	rule qualifier_list
+		s ("const" / "")
+	end
+
+	rule param_decl
+		type_name param_name:ident_name? <ParamDeclNode>
+	end
+
+	rule type_name
+		qualifier_list qualified_type_name '*'* '&'?
+	end
+
+	rule qualified_type_name
+		ident_name s "::" qualified_type_name / ident_name
+	end
+
+	rule ident_name
+		s [a-zA-Z_] [a-zA-Z0-9_]* <IdentifierNode>
+	end
+
+	rule s
+		space*
+	end
+
+	rule S
+		space+
+	end
+
+	rule space
+		[ \t\n\r]
+	end
+end
+
