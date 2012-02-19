@@ -12,13 +12,21 @@ class {{name}}IfaceBase;
 class {{name}}
 {
 public:
+	/** Construct a {{name}} pointer from an object of type T.
+	  * Calling this method will produce a compile-time error if T lacks
+	  * one or more of the methods in this interface.
+	  */
 	template <class T>
-	{{name}}(T* inst);
+	{{name}}(T* object);
 
+	// methods declared in the {{name}} interface
 	{{#methods}}
 	{{return-type}} {{name}}({{param-list}}){{qualifiers}};
 	{{/methods}}
 
+	/** Operator to allow {{name}} instances to be accessed like pointer
+	  * classes (eg. using interfacePtr->someMethod() instead of interfacePtr.someMethod())
+	  */
 	{{name}}* operator->() {
 		return this;
 	}
@@ -30,6 +38,8 @@ private:
 {{/interfaces}}
 
 {{#interfaces}}
+// Base class for classes which implement method dispatch for {{name}}.  There is one
+// {{name}}IfaceBase instance per concrete-type.
 class {{name}}IfaceBase
 {
 public:
