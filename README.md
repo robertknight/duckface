@@ -40,7 +40,7 @@ called via an *interface pointer*.
             std::string toString() const {
                 return "foo";
             }
-        }
+        };
 
         int main(int, char**)
         {
