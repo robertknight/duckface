@@ -2,7 +2,9 @@ duckface is a simple tool which simulates Go-like interfaces with C++.
 
 In Go, types do not explicitly declare that they implement interfaces,
 instead an interface is just a set of methods and an *interface value* can hold
-a reference to any type which implements the methods in the interface.
+a reference to any type which implements the methods in the interface.  The lack of requirement
+to specify whether a type implements a particular interface makes this a kind of duck-typing
+(hence the name of the project).
 
 duckface is a tool which creates C++ classes (known as an *interface pointers*) that can emulate this behavior.
 
