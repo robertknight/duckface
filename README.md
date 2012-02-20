@@ -10,9 +10,9 @@ duckface is a tool which creates C++ classes (known as an *interface pointers*) 
 
 ## How it Works
 
-The `dface.rb` tool reads an interface file (by convention, named `InterfaceName.if.h`) which declares a set of
+The `duckface.rb` tool reads an interface file (by convention, named `InterfaceName.if.h`) which declares a set of
 interfaces using a syntax very similar to C++ struct declarations.  Each interface specifies a set of methods
-which compatible classes must implement in order to 'implement' the interface.  `dface.rb` then generates
+which compatible classes must implement in order to 'implement' the interface.  `duckface.rb` then generates
 a header file which declares an *interface pointer* class with the same name as the interface.  Instances of this class can
 wrap any type which implements the methods in the interface.  Any of the matching methods can then be
 called via an *interface pointer*.
@@ -27,7 +27,7 @@ called via an *interface pointer*.
             std::string toString() const;
         }
 
- 2. Run `dface.rb Stringer.if.h` to create the `Stringer` class, which is an interface pointer that
+ 2. Run `duckface.rb Stringer.if.h` to create the `Stringer` class, which is an interface pointer that
     can wrap any object which has a compatible `toString()` method.
     Normally you would integrate this step into the build-system for your project.
 
@@ -66,7 +66,7 @@ duckface interfaces are an alternative to standard single or multiple inheritanc
 ## Dependencies
 
  * The generated classes have no compile or runtime dependencies, other than those for the types used in interface methods.
- * The `dface.rb` tool uses Ruby and the treetop and mustache gems.
+ * The `duckface.rb` tool uses Ruby and the treetop and mustache gems.
 
 ## Performance
 
