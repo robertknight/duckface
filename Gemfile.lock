@@ -1,0 +1,15 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    mustache (0.99.4)
+    polyglot (0.3.3)
+    treetop (1.4.10)
+      polyglot
+      polyglot (>= 0.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mustache
+  treetop
