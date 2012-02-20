@@ -81,6 +81,7 @@ class TemplateRenderer < Mustache
 end
 
 class_template_vars = {
+	"input-file" => File.basename(file),
 	:header => header,
 	:interfaces => interfaces
 }
