@@ -1,6 +1,8 @@
 # Interface File Specification
 
 Interface files consist of include declarations and interface declarations.
+Interface files have `.if.h` extensions and the corresponding generated headers
+have the same base name but a `.h` extension.
 
 ## Include declarations
 
