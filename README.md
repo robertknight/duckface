@@ -14,8 +14,8 @@ The `duckface.rb` tool reads an interface file (by convention, named `InterfaceN
 interfaces using a syntax very similar to C++ struct declarations.  Each interface specifies a set of methods
 which compatible classes must implement in order to 'implement' the interface.  `duckface.rb` then generates
 a header file which declares an *interface pointer* class with the same name as the interface.  Instances of this class can
-wrap any type which implements the methods in the interface.  Any of the matching methods can then be
-called via an *interface pointer*.
+wrap a pointer to any type which implements the methods in the interface.  Any of the matching methods can then be
+called via the *interface pointer*.
 
 ## Example Usage
 
