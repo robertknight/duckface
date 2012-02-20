@@ -2,23 +2,11 @@ require 'ast.rb'
 
 grammar Duckface
 	rule block_list
-		block* <BlockListNode>
+		header_block ifaces:iface_block* s <BlockListNode>
 	end
 
-	rule block
-		include_block s <IncludeBlockNode>
-		/
-		iface_block s <InterfaceBlockNode>
-	end
-
-	rule include_block
-		s "#include" s include_name
-	end
-
-	rule include_name
-		"<" file_name ">"
-		/
-		'"' file_name '"'
+	rule header_block
+		 (!"interface" .)* <HeaderBlockNode>
 	end
 
 	rule file_name
@@ -26,7 +14,7 @@ grammar Duckface
 	end
 
 	rule iface_block
-		s "interface" ident_name s "{" method_list s "}"
+		s "interface" ident_name s "{" method_list s "}" <InterfaceBlockNode>
 	end
 
 	rule method_list

@@ -1,30 +1,28 @@
 
 class BlockListNode < Treetop::Runtime::SyntaxNode
-	def includes
-		elements.flat_map do |e|
-			e.is_a?(IncludeBlockNode) ? e.include_name : []
-		end
+	def header_text
+		header_block.content
 	end
 
 	def interfaces
-		elements.select do |e|
+		ifaces.elements.select do |e|
 			e.is_a? InterfaceBlockNode
 		end
 	end
 end
 
-class IncludeBlockNode < Treetop::Runtime::SyntaxNode
-	def include_name
-		include_block.include_name.file_name.text_value
+class HeaderBlockNode < Treetop::Runtime::SyntaxNode
+	def content
+		text_value
 	end
 end
 
 class InterfaceBlockNode < Treetop::Runtime::SyntaxNode
 	def name
-		iface_block.ident_name.value
+		ident_name.value
 	end
 	def methods
-		iface_block.elements.each do |e|
+		elements.each do |e|
 			if e.is_a? MethodListNode
 				return e.methods
 			end

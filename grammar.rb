@@ -10,6 +10,20 @@ module Duckface
     @root ||= :block_list
   end
 
+  module BlockList0
+    def header_block
+      elements[0]
+    end
+
+    def ifaces
+      elements[1]
+    end
+
+    def s
+      elements[2]
+    end
+  end
+
   def _nt_block_list
     start_index = index
     if node_cache[:block_list].has_key?(index)
@@ -21,46 +35,46 @@ module Duckface
       return cached
     end
 
-    s0, i0 = [], index
-    loop do
-      r1 = _nt_block
-      if r1
-        s0 << r1
-      else
-        break
+    i0, s0 = index, []
+    r1 = _nt_header_block
+    s0 << r1
+    if r1
+      s2, i2 = [], index
+      loop do
+        r3 = _nt_iface_block
+        if r3
+          s2 << r3
+        else
+          break
+        end
+      end
+      r2 = instantiate_node(SyntaxNode,input, i2...index, s2)
+      s0 << r2
+      if r2
+        r4 = _nt_s
+        s0 << r4
       end
     end
-    r0 = instantiate_node(BlockListNode,input, i0...index, s0)
+    if s0.last
+      r0 = instantiate_node(BlockListNode,input, i0...index, s0)
+      r0.extend(BlockList0)
+    else
+      @index = i0
+      r0 = nil
+    end
 
     node_cache[:block_list][start_index] = r0
 
     r0
   end
 
-  module Block0
-    def include_block
-      elements[0]
-    end
-
-    def s
-      elements[1]
-    end
+  module HeaderBlock0
   end
 
-  module Block1
-    def iface_block
-      elements[0]
-    end
-
-    def s
-      elements[1]
-    end
-  end
-
-  def _nt_block
+  def _nt_header_block
     start_index = index
-    if node_cache[:block].has_key?(index)
-      cached = node_cache[:block][index]
+    if node_cache[:header_block].has_key?(index)
+      cached = node_cache[:header_block][index]
       if cached
         cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
         @index = cached.interval.end
@@ -68,208 +82,50 @@ module Duckface
       return cached
     end
 
-    i0 = index
-    i1, s1 = index, []
-    r2 = _nt_include_block
-    s1 << r2
-    if r2
-      r3 = _nt_s
-      s1 << r3
-    end
-    if s1.last
-      r1 = instantiate_node(IncludeBlockNode,input, i1...index, s1)
-      r1.extend(Block0)
-    else
-      @index = i1
-      r1 = nil
-    end
-    if r1
-      r0 = r1
-    else
-      i4, s4 = index, []
-      r5 = _nt_iface_block
-      s4 << r5
-      if r5
-        r6 = _nt_s
-        s4 << r6
-      end
-      if s4.last
-        r4 = instantiate_node(InterfaceBlockNode,input, i4...index, s4)
-        r4.extend(Block1)
+    s0, i0 = [], index
+    loop do
+      i1, s1 = index, []
+      i2 = index
+      if has_terminal?("interface", false, index)
+        r3 = instantiate_node(SyntaxNode,input, index...(index + 9))
+        @index += 9
       else
-        @index = i4
-        r4 = nil
+        terminal_parse_failure("interface")
+        r3 = nil
       end
-      if r4
-        r0 = r4
-      else
-        @index = i0
-        r0 = nil
-      end
-    end
-
-    node_cache[:block][start_index] = r0
-
-    r0
-  end
-
-  module IncludeBlock0
-    def s1
-      elements[0]
-    end
-
-    def s2
-      elements[2]
-    end
-
-    def include_name
-      elements[3]
-    end
-  end
-
-  def _nt_include_block
-    start_index = index
-    if node_cache[:include_block].has_key?(index)
-      cached = node_cache[:include_block][index]
-      if cached
-        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
-        @index = cached.interval.end
-      end
-      return cached
-    end
-
-    i0, s0 = index, []
-    r1 = _nt_s
-    s0 << r1
-    if r1
-      if has_terminal?("#include", false, index)
-        r2 = instantiate_node(SyntaxNode,input, index...(index + 8))
-        @index += 8
-      else
-        terminal_parse_failure("#include")
-        r2 = nil
-      end
-      s0 << r2
-      if r2
-        r3 = _nt_s
-        s0 << r3
-        if r3
-          r4 = _nt_include_name
-          s0 << r4
-        end
-      end
-    end
-    if s0.last
-      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
-      r0.extend(IncludeBlock0)
-    else
-      @index = i0
-      r0 = nil
-    end
-
-    node_cache[:include_block][start_index] = r0
-
-    r0
-  end
-
-  module IncludeName0
-    def file_name
-      elements[1]
-    end
-
-  end
-
-  module IncludeName1
-    def file_name
-      elements[1]
-    end
-
-  end
-
-  def _nt_include_name
-    start_index = index
-    if node_cache[:include_name].has_key?(index)
-      cached = node_cache[:include_name][index]
-      if cached
-        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
-        @index = cached.interval.end
-      end
-      return cached
-    end
-
-    i0 = index
-    i1, s1 = index, []
-    if has_terminal?("<", false, index)
-      r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
-      @index += 1
-    else
-      terminal_parse_failure("<")
-      r2 = nil
-    end
-    s1 << r2
-    if r2
-      r3 = _nt_file_name
-      s1 << r3
       if r3
-        if has_terminal?(">", false, index)
+        r2 = nil
+      else
+        @index = i2
+        r2 = instantiate_node(SyntaxNode,input, index...index)
+      end
+      s1 << r2
+      if r2
+        if index < input_length
           r4 = instantiate_node(SyntaxNode,input, index...(index + 1))
           @index += 1
         else
-          terminal_parse_failure(">")
+          terminal_parse_failure("any character")
           r4 = nil
         end
         s1 << r4
       end
-    end
-    if s1.last
-      r1 = instantiate_node(SyntaxNode,input, i1...index, s1)
-      r1.extend(IncludeName0)
-    else
-      @index = i1
-      r1 = nil
-    end
-    if r1
-      r0 = r1
-    else
-      i5, s5 = index, []
-      if has_terminal?('"', false, index)
-        r6 = instantiate_node(SyntaxNode,input, index...(index + 1))
-        @index += 1
+      if s1.last
+        r1 = instantiate_node(SyntaxNode,input, i1...index, s1)
+        r1.extend(HeaderBlock0)
       else
-        terminal_parse_failure('"')
-        r6 = nil
+        @index = i1
+        r1 = nil
       end
-      s5 << r6
-      if r6
-        r7 = _nt_file_name
-        s5 << r7
-        if r7
-          if has_terminal?('"', false, index)
-            r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
-            @index += 1
-          else
-            terminal_parse_failure('"')
-            r8 = nil
-          end
-          s5 << r8
-        end
-      end
-      if s5.last
-        r5 = instantiate_node(SyntaxNode,input, i5...index, s5)
-        r5.extend(IncludeName1)
+      if r1
+        s0 << r1
       else
-        @index = i5
-        r5 = nil
-      end
-      if r5
-        r0 = r5
-      else
-        @index = i0
-        r0 = nil
+        break
       end
     end
+    r0 = instantiate_node(HeaderBlockNode,input, i0...index, s0)
 
-    node_cache[:include_name][start_index] = r0
+    node_cache[:header_block][start_index] = r0
 
     r0
   end
@@ -395,7 +251,7 @@ module Duckface
       end
     end
     if s0.last
-      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
+      r0 = instantiate_node(InterfaceBlockNode,input, i0...index, s0)
       r0.extend(IfaceBlock0)
     else
       @index = i0

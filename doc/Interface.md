@@ -1,21 +1,16 @@
 # Interface File Specification
 
-Interface files consist of include declarations and interface declarations.
+Interface files consist of a header followed by interface declarations.
 Interface files have `.if.h` extensions and the corresponding generated headers
 have the same base name but a `.h` extension.
 
-## Include declarations
+## Header
 
-Include declarations include any headers that declare types used in interface methods.
+The header consists of all text from the top of the file, up until the first occurrence of
+the keyword "interface".  It is copied into the generated header file verbatim.
 
-Include declarations are the same as in normal C++ header files, consisting
-of `#include` followed by the header name in angle brackets or quotes.
-
-    #include <FileName>
-    #include "FileName"
-
-Include declarations are always placed at the top of generated headers, regardless
-of where they appear in the interface file.
+The header typically contains includes and forward declarations required for types
+referenced in interface method declarations.
 
 ## Interface declarations
 

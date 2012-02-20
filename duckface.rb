@@ -2,6 +2,7 @@
 
 $: << File.dirname(__FILE__)
 
+require 'rubygems'
 require 'mustache'
 require 'treetop'
 require 'grammar.rb'
@@ -31,12 +32,7 @@ if !result
 	exit 1
 end
 
-includes = []
-result.includes.each do |incl|
-	includes << {
-		:name => incl
-	};
-end
+header = result.header_text.strip
 
 interfaces = []
 result.interfaces.each do |iface|
@@ -85,7 +81,7 @@ class TemplateRenderer < Mustache
 end
 
 class_template_vars = {
-	:includes => includes,
+	:header => header,
 	:interfaces => interfaces
 }
 
