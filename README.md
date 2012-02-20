@@ -29,7 +29,6 @@ called via an *interface pointer*.
 
  2. Run `duckface.rb Stringer.if.h` to create the `Stringer` class, which is an interface pointer that
     can wrap any object which has a compatible `toString()` method.
-    Normally you would integrate this step into the build-system for your project.
 
  3. Use the generated `Stringer` class to wrap a suitable class:
 
