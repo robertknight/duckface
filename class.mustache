@@ -19,6 +19,7 @@ public:
 	  */
 	template <class T>
 	{{name}}(T* object);
+	{{name}}();
 
 	// methods declared in the {{name}} interface
 	{{#methods}}
@@ -41,6 +42,8 @@ public:
 	bool operator==(T* other) const;
 	template <class T>
 	bool operator!=(T* other) const;
+
+	operator bool() const;
 
 private:
 	{{name}}IfaceBase* m_impl;
@@ -82,6 +85,12 @@ inline {{name}}::{{name}}(T* inst)
 {
 }
 
+inline {{name}}::{{name}}()
+: m_impl(0)
+, m_obj(0)
+{
+}
+
 {{#methods}}
 inline {{return-type}} {{iface-name}}::{{name}}({{param-list}}) {{qualifiers}}
 {
@@ -97,6 +106,11 @@ inline bool {{name}}::operator==(const {{name}}& other) const
 inline bool {{name}}::operator!=(const {{name}}& other) const
 {
 	return m_obj != other.m_obj;
+}
+
+inline {{name}}::operator bool() const
+{
+	return m_obj != 0;
 }
 
 template <class T>
