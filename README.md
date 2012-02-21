@@ -32,7 +32,8 @@ called via the *interface pointer*.
  2. Run `duckface.rb Stringer.if.h` to create the `Stringer` class, which is an interface pointer that
     can wrap any object which has a compatible `toString()` method.
 
- 3. Use the generated `Stringer` class to wrap a suitable class:
+ 3. Now we'll use the generated `Stringer` class to wrap another class which matches the interface by having
+    a compatible `toString()` method, but doesn't explicitly declare that it implements the `Stringer` interface.
 
         #include "Stringer.h"
         #include <iostream>
