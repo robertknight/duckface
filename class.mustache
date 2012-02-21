@@ -32,6 +32,16 @@ public:
 		return this;
 	}
 
+	// Equality operators.  Two interface pointers are equal if they refer
+	// to the same underlying object.
+	bool operator==(const {{name}}& other) const;
+	bool operator!=(const {{name}}& other) const;
+
+	template <class T>
+	bool operator==(T* other) const;
+	template <class T>
+	bool operator!=(T* other) const;
+
 private:
 	{{name}}IfaceBase* m_impl;
 	void* m_obj;
@@ -78,5 +88,27 @@ inline {{return-type}} {{iface-name}}::{{name}}({{param-list}}) {{qualifiers}}
 	{{#has-return-value}}return {{/has-return-value}}m_impl->{{name}}(m_obj{{#has-params}}, {{/has-params}}{{arg-list}});
 }
 {{/methods}}
+
+inline bool {{name}}::operator==(const {{name}}& other) const
+{
+	return m_obj == other.m_obj;
+}
+
+inline bool {{name}}::operator!=(const {{name}}& other) const
+{
+	return m_obj != other.m_obj;
+}
+
+template <class T>
+inline bool {{name}}::operator==(T* other) const
+{
+	return m_obj == other;
+}
+
+template <class T>
+inline bool {{name}}::operator!=(T* other) const
+{
+	return m_obj != other;
+}
 {{/interfaces}}
 
