@@ -1,16 +1,18 @@
-duckface is a simple tool which simulates Go-like interfaces with C++.
+duckface is a simple tool which provides a way to create and use interfaces in C++ without
+the need to modify classes in order for them to implement the interface (as inheritance requires)
+or make users of the interface dependent on template arguments.
 
-In Go, types do not explicitly declare that they implement interfaces,
-instead an interface is just a set of methods and an *interface value* can hold
-a reference to any type which implements the methods in the interface.  The lack of requirement
-to specify whether a type implements a particular interface makes this a kind of duck-typing
+The approach is based on interfaces in the Go language.  In Go, types do not explicitly
+declare that they implement interfaces, instead an interface is just a set of methods and
+an *interface value* can hold a reference to any type which implements the methods in the interface.
+The lack of requirement to specify whether a type implements a particular interface makes this a kind of duck-typing
 (hence the name of the project).
 
 duckface is a tool which creates C++ classes (known as an *interface pointers*) that can emulate this behavior.
 
 ## How it Works
 
-The `duckface.rb` tool reads an interface file (by convention, named `InterfaceName.if.h`) which declares a set of
+The `duckface.rb` tool reads an interface file (typically named `InterfaceName.if.h`) which declares a set of
 interfaces using a syntax very similar to C++ struct declarations.  Each interface specifies a set of methods
 which compatible classes must implement in order to 'implement' the interface.  `duckface.rb` then generates
 a header file which declares an *interface pointer* class with the same name as the interface.  Instances of this class can
@@ -57,10 +59,13 @@ duckface interfaces are an alternative to standard single or multiple inheritanc
 
  * Compared to single/multiple inheritance in C++, there is no need to modify an existing class in order for it
    to implement an interface.  This is especially useful when the existing classes are part of third-party libraries
-   which are difficult to modify.
+   which are difficult to modify.  It is often the case that a library of classes may conform to a convention (such as
+   providing a `toString()` method to get a string representation of the object) but do not explicitly implement a common
+   interface.
  * Compared to templates, there is no need to make the function or class which uses an interface dependent on template
-   arguments or for all code which uses the interface to be placed in a header file.  The cost of interfaces are
-   that method calls are slower.
+   arguments or for all code which uses the interface to be placed in a header file.  Additionally, it is made explicit which
+   set of methods a user of an interface can access.  With templates, this information is only present in the documentation and
+   in compile-time errors when attempting to instantiate a template with a type that does not meet the requirements.
 
 ## Dependencies
 
