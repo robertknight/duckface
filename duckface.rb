@@ -63,6 +63,8 @@ result.interfaces.each do |iface|
 		method_map["arg-list"] = arg_list
 		method_map["has-params"] = !param_list.empty?
 		method_map["has-return-value"] = method.return_type != "void"
+		method_map["has-qualifiers"] = !method.qualifiers.empty?
+		method_map["qualifiers"] = method.qualifiers
 		method_map["iface-name"] = iface.name
 		methods << method_map
 	end

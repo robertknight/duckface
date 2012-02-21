@@ -23,7 +23,7 @@ public:
 
 	// methods declared in the {{name}} interface
 	{{#methods}}
-	{{return-type}} {{name}}({{param-list}}){{qualifiers}};
+	{{return-type}} {{name}}({{param-list}}){{#has-qualifiers}} {{/has-qualifiers}}{{qualifiers}};
 	{{/methods}}
 
 	/** Operator to allow {{name}} instances to be accessed like pointer

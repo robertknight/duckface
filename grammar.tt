@@ -32,7 +32,7 @@ grammar Duckface
 	end
 
 	rule qualifier_list
-		s ("const" / "")
+		s ("const" / "") <CvQualifierNode>
 	end
 
 	rule param_decl

@@ -63,6 +63,10 @@ class MethodDeclNode < Treetop::Runtime::SyntaxNode
 		end
 		return []
 	end
+
+	def qualifiers
+		qualifier_list.value
+	end
 end
 
 class ParamListNode < Treetop::Runtime::SyntaxNode
@@ -90,6 +94,12 @@ class ParamDeclNode < Treetop::Runtime::SyntaxNode
 		else
 			nil
 		end
+	end
+end
+
+class CvQualifierNode < Treetop::Runtime::SyntaxNode
+	def value
+		text_value.strip
 	end
 end
 

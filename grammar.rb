@@ -524,7 +524,7 @@ module Duckface
       s0 << r2
     end
     if s0.last
-      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
+      r0 = instantiate_node(CvQualifierNode,input, i0...index, s0)
       r0.extend(QualifierList0)
     else
       @index = i0
