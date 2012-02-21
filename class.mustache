@@ -45,6 +45,10 @@ public:
 
 	operator bool() const;
 
+	// access to the underlying object
+	void* data();
+	const void* data() const;
+
 private:
 	{{name}}IfaceBase* m_impl;
 	void* m_obj;
@@ -123,6 +127,16 @@ template <class T>
 inline bool {{name}}::operator!=(T* other) const
 {
 	return m_obj != other;
+}
+
+inline void* {{name}}::data()
+{
+	return m_obj;
+}
+
+const void* {{name}}::data() const
+{
+	return m_obj;
 }
 {{/interfaces}}
 
