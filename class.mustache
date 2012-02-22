@@ -49,6 +49,10 @@ public:
 	void* data();
 	const void* data() const;
 
+	// destroy the underlying object and make this
+	// interface pointer null
+	void destroy();
+
 private:
 	{{name}}IfaceBase* m_impl;
 	void* m_obj;
@@ -64,6 +68,7 @@ public:
 	{{#methods}}
 	virtual {{return-type}} {{name}}(void* inst{{#has-params}}, {{/has-params}}{{param-list}}) {{qualifiers}} = 0;
 	{{/methods}}
+	virtual void destroy(void* inst) = 0;
 };
 
 template <class T>
@@ -73,8 +78,11 @@ public:
 	{{#methods}}
 	virtual {{return-type}} {{name}}(void* inst{{#has-params}}, {{/has-params}}{{param-list}}) {{qualifiers}} {
 		{{#has-return-value}}return {{/has-return-value}}static_cast<T*>(inst)->{{name}}({{arg-list}});
-	};
+	}
 	{{/methods}}
+	virtual void destroy(void* inst) {
+		delete static_cast<T*>(inst);
+	}
 
 	static {{name}}Iface<T>* instance() {
 		static {{name}}Iface<T> inst;
@@ -101,6 +109,12 @@ inline {{return-type}} {{iface-name}}::{{name}}({{param-list}}) {{qualifiers}}
 	{{#has-return-value}}return {{/has-return-value}}m_impl->{{name}}(m_obj{{#has-params}}, {{/has-params}}{{arg-list}});
 }
 {{/methods}}
+
+void {{name}}::destroy()
+{
+	m_impl->destroy(m_obj);
+	m_obj = 0;
+}
 
 inline bool {{name}}::operator==(const {{name}}& other) const
 {
