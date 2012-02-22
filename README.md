@@ -79,7 +79,8 @@ duckface interfaces are an alternative to standard single or multiple inheritanc
    another to a dispatch class for the (concrete-type,interface) pair involved.  This is similar to the implementation of interface values in Go.
  * Method calls on interface pointers require a single virtual function call.
  * For each distinct (concrete-type,interface) pair, a dispatch class instance is created to invoke method calls for
-   that interface and underlying concrete-type.
+   that interface and underlying concrete-type.  The dispatch class is a template which is instantiated at compile-time
+   when an interface pointer is constructed from a pointer to a compatible concrete type.
 
 ## Limitations
 
