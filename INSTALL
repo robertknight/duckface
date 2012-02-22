@@ -1,0 +1,6 @@
+duckface.rb requires Ruby plus a few gems.  To install the dependencies run:
+
+	gem install bundle
+	bundle install
+
+See http://gembundler.com/ for more details.
